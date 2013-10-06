@@ -13,7 +13,7 @@ class Board
     @width.times do |i|
       @tiles.push([])
       @height.times do |j|
-        @tiles[i][j] = Tile.new(0,true)
+        @tiles[i][j] = Tile.new(0,false)
       end
     end
     place_mines
@@ -39,18 +39,17 @@ class Board
       end
     end
   end
-
+  
   def to_s
 
     @tiles.each do |row|
       row.each do |t|
-        print "#{t.value}|" 
+        print "#{t.see}|" 
       end
       print "\n"
     end
   end
   
 end
-b = Board.new(4,4,15)
-b.to_s
+
 
