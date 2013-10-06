@@ -1,4 +1,8 @@
 class Tile
+  
+  attr_reader :visible
+  attr_accessor :value
+
   def initialize(value,visible)
     @value = value
     @visible = visible
@@ -8,14 +12,11 @@ class Tile
     @visible = true
     @value
   end
+
   def see
-    if @visible == true then
-      @value
-    else
-      @default
-    end
+    @visible ? @value : @default
   end
-  attr_reader :visible
-  attr_accessor :value
+
+  
 end
 
