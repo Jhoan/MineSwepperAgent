@@ -27,24 +27,34 @@ class Board
         redo
       end
       @tiles[row][col].value = "*"
-      [-1,0,1].each do |i|
-        [-1,0,1].each do |j|
-          nrow = row+i
-          ncol = col+j
-          if nrow.between?(0,@height-1) and ncol.between?(0,@width-1) and 
+      self.each_neighbour(row,col) {|nb| nb.value += 1}
+    end
+  end
+
+  def dig_tile!(row,col)
+    if @tiles[row][col].dig == 0
+      self.each_neighbour(row,col).dig
+    end
+  end
+
+  def each_neighbour(row,col)
+    [-1,0,1].each do |i|
+      [-1,0,1].each do |j|
+        nrow = row+i
+        ncol = col+j
+        if nrow.between?(0,@height-1) and ncol.between?(0,@width-1) and 
                                       @tiles[nrow][ncol].value.kind_of?(Fixnum)
-            @tiles[nrow][ncol].value += 1               
-          end
+          yield @tiles[nrow][ncol]
         end
       end
     end
   end
-  
+
   def to_s
 
     @tiles.each do |row|
       row.each do |t|
-        print "#{t.see}|" 
+        print "#{t.value}|" 
       end
       print "\n"
     end
