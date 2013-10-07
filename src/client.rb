@@ -15,6 +15,6 @@ client.bind(hostname, 4910) #if the socket is not binded
 # client.send(ARGV[2].nil? ? "Default Message" : ARGV[2],0 , hostname,port) 
 # response = client.recvfrom(64)
 # puts "#{response[1][2]}:#{response[1][1]} says: #{response[0]}"
-client.send("1 2 2",0,hostname,port) #(Command Row Col)
+client.send(ARGV[2],0,hostname,port) #(Command Row Col)
 response = client.recvfrom(64)
 puts "#{response[1][2]}:#{response[1][1]} says: #{response[0]}"

@@ -34,7 +34,7 @@ class Board
   def dig_tile!(row,col)
     val = @tiles[row][col].dig.to_s
     if val == "0"
-      self.each_neighbour(row,col) {|nb| nb.dig}
+      self.each_neighbour(row,col) {|nb,nrow,ncol| self.dig_tile!(nrow.to_i,ncol.to_i)}
     end
     val
   end
@@ -46,7 +46,7 @@ class Board
         ncol = col+j
         if nrow.between?(0,@height-1) and ncol.between?(0,@width-1) and 
                                       @tiles[nrow][ncol].value.kind_of?(Fixnum)
-          yield @tiles[nrow][ncol]
+          yield @tiles[nrow][ncol], nrow, ncol unless nrow == 0 and ncol == 0
         end
       end
     end
