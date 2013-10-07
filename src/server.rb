@@ -15,5 +15,13 @@ class Server < UDPSocket
     send("Roger That.",0,address,port)
   end
 
+  def process(data)
+    command, row, col = data.split(" ")
+    case command
+      when "1"
+        @board.dig_tile!(row.to_i,col.to_i)
+      end
+    end
+
 end
 
