@@ -3,7 +3,7 @@ require './board'
 class Server < UDPSocket
   attr_reader :board
   alias_method :listen, :recvfrom
-  def initialize(hostname,port,width = 8, height = 8, mines = 10)
+  def initialize(hostname,port,width = 15, height = 15, mines = 1)
     super(Socket::AF_INET)
     @hostname = hostname
     @port = port

@@ -32,11 +32,18 @@ class Board
   end
 
   def dig_tile!(row,col)
+    #puts "Row: #{row} Col:#{col}"
+    #sleep(0.5)
+    return @tiles[row][col].value if @tiles[row][col].visible == true
     val = @tiles[row][col].dig.to_s
-    if val == "0"
-      self.each_neighbour(row,col) {|nb,nrow,ncol| self.dig_tile!(nrow.to_i,ncol.to_i)}
+
+    if val == "0" 
+      self.each_neighbour(row,col) do |nb,nrow,ncol| 
+        self.dig_tile!(nrow.to_i,ncol.to_i)
+      end
+    else
+      return val
     end
-    val
   end
 
   def each_neighbour(row,col)
@@ -46,7 +53,7 @@ class Board
         ncol = col+j
         if nrow.between?(0,@height-1) and ncol.between?(0,@width-1) and 
                                       @tiles[nrow][ncol].value.kind_of?(Fixnum)
-          yield @tiles[nrow][ncol], nrow, ncol unless nrow == 0 and ncol == 0
+          yield @tiles[nrow][ncol], nrow, ncol unless i == 0 and j == 0
         end
       end
     end
@@ -56,7 +63,7 @@ class Board
 
     @tiles.each do |row|
       row.each do |t|
-        print "#{t.see}|" 
+        print t.see == 0 ? " |" : "#{t.see}|" 
       end
       print "\n"
     end
