@@ -11,8 +11,9 @@ class Server < UDPSocket
     @board = Board.new(width,height,mines)
   end
 
-  def reply(address,port)
-    send("Roger That.",0,address,port)
+  def reply(answer,address,port)
+    answer ||= "Command executed succesfully"
+    send(answer.to_s,0,address,port)
   end
 
   def process(data)

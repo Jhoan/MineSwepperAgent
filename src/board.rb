@@ -32,8 +32,6 @@ class Board
   end
 
   def dig_tile!(row,col)
-    #puts "Row: #{row} Col:#{col}"
-    #sleep(0.5)
     return @tiles[row][col].value if @tiles[row][col].visible == true
     val = @tiles[row][col].dig.to_s
 
@@ -41,9 +39,10 @@ class Board
       self.each_neighbour(row,col) do |nb,nrow,ncol| 
         self.dig_tile!(nrow.to_i,ncol.to_i)
       end
-    else
-      return val
     end
+    #else
+      return val
+    #end
   end
 
   def each_neighbour(row,col)
