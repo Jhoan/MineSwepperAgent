@@ -1,7 +1,7 @@
 require 'socket'
 require './board'
 class Server < UDPSocket
-  attr_reader :board
+  attr_reader :board, :players
   alias_method :listen, :recvfrom
   def initialize(hostname,port,width = 15, height = 15, mines = 1)
     super(Socket::AF_INET)
@@ -9,6 +9,7 @@ class Server < UDPSocket
     @port = port
     self.bind(@hostname,@port)
     @board = Board.new(width,height,mines)
+    @players = []
   end
 
   def reply(answer,address,port)
@@ -22,7 +23,14 @@ class Server < UDPSocket
       when "1"
         @board.dig_tile!(row.to_i,col.to_i)
       end
+  end
+  def add_player(data)
+    @players.push({:ip => data[1][2],:port => data[1][1]})
+  end
+  def each_player
+    @players.each do |player|
+      yield player
     end
-
+  end
 end
 

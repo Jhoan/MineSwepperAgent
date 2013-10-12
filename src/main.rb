@@ -3,6 +3,17 @@ require './server'
 require 'pp'
 server = Server.new('127.0.0.1',4913)
 data = []
+
+2.times do |i|
+  puts "Waiting for player #{i+1}"
+  data = server.listen(64)
+  server.add_player(data)
+  server.each_player do |player|
+    puts "Player #{i} is: #{player[:ip]}:#{player[:port]}"
+  end
+end
+abort(1)
+
 loop do
   server.board.to_s
   data = server.listen(64)
