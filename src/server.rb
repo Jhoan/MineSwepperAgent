@@ -22,6 +22,8 @@ class Server < UDPSocket
     case command
       when "1"
         @board.dig_tile!(row.to_i,col.to_i)
+      when "2"
+        
       end
   end
   def add_player(data)
